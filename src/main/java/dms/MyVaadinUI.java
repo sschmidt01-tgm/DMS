@@ -60,6 +60,12 @@ public class MyVaadinUI extends UI {
             public boolean beforeViewChange(ViewChangeEvent event) {
                 boolean isLoggedIn = getSession().getAttribute("user") != null;
                 boolean isLoginView = event.getNewView() instanceof SimpleLoginView;
+//                if(isLoggedIn){
+//                    System.out.println("rekt = " );
+//                    getNavigator().removeView(SimpleLoginMainView.NAME);
+//                    SimpleLoginMainView slmv = new SimpleLoginMainView(persist);
+//                    getNavigator().addView(SimpleLoginMainView.NAME, slmv);
+//                }
                 if (!isLoggedIn && !isLoginView) {
                     //Redirect to login view always if a user has not yet logged in 
                     getNavigator().navigateTo(SimpleLoginView.NAME);
@@ -74,6 +80,8 @@ public class MyVaadinUI extends UI {
 
             @Override
             public void afterViewChange(ViewChangeEvent event) {
+                boolean isLoggedIn = getSession().getAttribute("user") != null;
+                boolean isLoginView = event.getNewView() instanceof SimpleLoginView;
             }
         });
 

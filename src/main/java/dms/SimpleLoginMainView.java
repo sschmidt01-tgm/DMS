@@ -31,6 +31,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
 import dms.model.Document;
+import dms.model.User;
 import java.util.List;
 
 /**
@@ -59,6 +60,8 @@ public class SimpleLoginMainView extends CustomComponent implements View {
     private static final String[] fieldNames = new String[]{DAUTHOR, DKAT,
         DKOM, DNAME, DTYPE, DKEY};
 
+    
+    
     Button logout = new Button("Logout", new Button.ClickListener() {
 
         @Override
@@ -79,6 +82,7 @@ public class SimpleLoginMainView extends CustomComponent implements View {
 
     @Override
     public void enter(ViewChangeEvent event) {
+        init();
     }
 
     /*
@@ -335,22 +339,29 @@ public class SimpleLoginMainView extends CustomComponent implements View {
         persist.begin();
         d = persist.getDocuments();
         persist.commit();
+        String test="";
+        if(getSession()!=null)
+            test = (String) getSession().getAttribute("user");
+        persist.begin();
+        User u = persist.getUserByUserName(test);
+        persist.commit();
+        for (int i = 0; i < d.size(); i++) {
+            if (u!=null && u.isAdmin() ) {
+                Object id = ic.addItem();
+                Document temp = (Document) d.get(i);
+                ic.getContainerProperty(id, DAUTHOR).setValue(
+                        temp.getAuthor().getName());
+                ic.getContainerProperty(id, DKAT).setValue(
+                        temp.getCategory());
+                ic.getContainerProperty(id, DNAME).setValue(
+                        temp.getDocumentName());
+                ic.getContainerProperty(id, DTYPE).setValue(
+                        temp.getFileEnding());
+                ic.getContainerProperty(id, DKEY).setValue(
+                        temp.getKeywords());
+            }
+        }
 
-		for (int i = 0; i < d.size(); i++) {
-			Object id = ic.addItem();
-                        Document temp = (Document) d.get(i);
-			ic.getContainerProperty(id, DAUTHOR).setValue(
-					temp.getAuthor().getName());
-			ic.getContainerProperty(id, DKAT).setValue(
-					temp.getCategory());
-                        ic.getContainerProperty(id, DNAME).setValue(
-					temp.getDocumentName());
-                        ic.getContainerProperty(id, DTYPE).setValue(
-					temp.getFileEnding());
-                        ic.getContainerProperty(id, DKEY).setValue(
-					temp.getKeywords());
-		}
-                
         return ic;
     }
 

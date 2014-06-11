@@ -74,11 +74,13 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
             persist.begin();
             User u = persist.getUserWithCredentials(username, password);
             persist.commit();
+            
             if (u != null) {
 //                Store the current user in the service session
                 getSession().setAttribute("user", u.getName());
 //                Navigate to main view
                 getUI().getNavigator().navigateTo(SimpleLoginMainView.NAME); // or MyVaadinUI.NAME
+                
             }
         } else {
             // TODO add message : "Username or Password is wrong"
