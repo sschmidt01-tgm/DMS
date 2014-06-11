@@ -30,6 +30,8 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
+import dms.model.Document;
+import java.util.List;
 
 /**
  *
@@ -69,8 +71,10 @@ public class SimpleLoginMainView extends CustomComponent implements View {
         }
     });
 
-    public SimpleLoginMainView() {
+    public SimpleLoginMainView(Persist persist) {
+        this.persist = persist;
         init();
+        createDummyDatasource();
     }
 
     @Override
@@ -82,7 +86,7 @@ public class SimpleLoginMainView extends CustomComponent implements View {
      * just a dummy in-memory list, but there are many more practical
      * implementations.
      */
-    IndexedContainer contactContainer = createDummyDatasource();
+    IndexedContainer contactContainer; 
 
     /*
      * After UI class is created, init() is executed. You should build and wire
@@ -320,30 +324,33 @@ public class SimpleLoginMainView extends CustomComponent implements View {
      * we could be using SQLContainer, JPAContainer or some other to persist the
      * data.
      */
-    private static IndexedContainer createDummyDatasource() {
+   private IndexedContainer createDummyDatasource() {
         IndexedContainer ic = new IndexedContainer();
 
         for (String p : fieldNames) {
             ic.addContainerProperty(p, String.class, "");
         }
-
-        /* Create dummy data by randomly combining first and last names */
-//		String[] fnames = { "Test"};
-//		String[] lnames = { "Test"};
-//                
-//		for (int i = 0; i < 1000; i++) {
-//			Object id = ic.addItem();
-//			ic.getContainerProperty(id, DAUTHOR).setValue(
-//					fnames[(int) (fnames.length * Math.random())]);
-//			ic.getContainerProperty(id, DKAT).setValue(
-//					lnames[(int) (lnames.length * Math.random())]);
-//                        ic.getContainerProperty(id, DNAME).setValue(
-//					fnames[(int) (fnames.length * Math.random())]);
-//                        ic.getContainerProperty(id, DTYPE).setValue(
-//					fnames[(int) (fnames.length * Math.random())]);
-//                        ic.getContainerProperty(id, DKEY).setValue(
-//					fnames[(int) (fnames.length * Math.random())]);
-//		}
+        
+        List<Document> d;
+        persist.begin();
+        d = persist.getDocuments();
+        persist.commit();
+        
+		for (int i = 0; i < d.size(); i++) {
+			Object id = ic.addItem();
+                        Document temp = (Document) d.get(i);
+			ic.getContainerProperty(id, DAUTHOR).setValue(
+					temp.getAuthor());
+			ic.getContainerProperty(id, DKAT).setValue(
+					temp.getCategory());
+                        ic.getContainerProperty(id, DNAME).setValue(
+					temp.getDocumentName());
+                        ic.getContainerProperty(id, DTYPE).setValue(
+					temp.getFileEnding());
+                        ic.getContainerProperty(id, DKEY).setValue(
+					temp.getKeywords());
+		}
+                
         return ic;
     }
 

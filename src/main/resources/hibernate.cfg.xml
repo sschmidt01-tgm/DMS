@@ -13,5 +13,6 @@
     <property name="javax.persistence.validation.mode">none</property>
     <property name="hibernate.jdbc.factory_class">org.hibernate.jdbc.NonBatchingBatcherFactory</property>
     <mapping class="dms.model.User"/>
+    <mapping class="dms.model.Document"/>
   </session-factory>
 </hibernate-configuration>

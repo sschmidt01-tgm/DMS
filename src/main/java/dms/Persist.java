@@ -5,7 +5,9 @@
  */
 package dms;
 
+import dms.model.Document;
 import dms.model.User;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
@@ -14,13 +16,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 /**
  *
  * @author Samuel
  */
 public class Persist {
 
-    private static SessionFactory sf;
+    private SessionFactory sf;
     private Session session;
     private Transaction tx;
     private Query q;
@@ -34,7 +37,9 @@ public class Persist {
     }
 
     private void setUp() {
-        sf = new AnnotationConfiguration().configure().buildSessionFactory();
+        Configuration c = new Configuration();
+        c.configure();
+        sf = c.buildSessionFactory();
     }
 
     public void begin() {
@@ -79,6 +84,29 @@ public class Persist {
         try {
             User u = (User) q.uniqueResult();
             return u;
+        } catch (NoResultException nre) {
+            Logger.getLogger(Persist.class.getName()).log(Level.SEVERE, nre.getMessage(), nre);
+            return null;
+        }
+    }
+    
+    public User getUserByUserName(String userName) {
+        q = session.createQuery("from User u where u.name = :name");
+        q.setParameter("name", userName);
+        try {
+            User u = (User) q.uniqueResult();
+            return u;
+        } catch (NoResultException nre) {
+            Logger.getLogger(Persist.class.getName()).log(Level.SEVERE, nre.getMessage(), nre);
+            return null;
+        }
+    }
+    
+    public List<Document> getDocuments() {
+        q = session.createQuery("select d from Document d where d.id>0");
+        try {
+            List<Document> d = q.list();
+            return d;
         } catch (NoResultException nre) {
             Logger.getLogger(Persist.class.getName()).log(Level.SEVERE, nre.getMessage(), nre);
             return null;

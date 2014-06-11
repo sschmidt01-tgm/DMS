@@ -8,6 +8,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
+import dms.model.Document;
 import dms.model.User;
 
 @Theme("mytheme")
@@ -33,6 +34,13 @@ public class MyVaadinUI extends UI {
         persist.saveEntity(u);
 
         persist.commit();
+        
+        persist.begin();
+        Document d = new Document();
+        d.setAuthor(persist.getUserByUserName("root"));
+        d.setCategory("kat");
+        d.setComment("comment");
+        persist.saveEntity(d);
 
         persist.begin();
         u = persist.getUserWithCredentials("root", "toor");
@@ -42,8 +50,7 @@ public class MyVaadinUI extends UI {
         SimpleLoginView slv = new SimpleLoginView();
         slv.setPersist(persist);
         getNavigator().addView(SimpleLoginView.NAME, slv);
-        SimpleLoginMainView slmv = new SimpleLoginMainView();
-        slmv.setPersist(persist);
+        SimpleLoginMainView slmv = new SimpleLoginMainView(persist);
         getNavigator().addView(SimpleLoginMainView.NAME, slmv);
         
         getNavigator().addViewChangeListener(new ViewChangeListener() {
