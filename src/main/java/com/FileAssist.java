@@ -24,11 +24,13 @@ public class FileAssist {
         return userdir;
     }
     public static File[] getAllFiles(){
+        if(!new File(FileAssist.getUserDir("DMS")).exists())return null;
         File dir=new File(FileAssist.getUserDir("DMS"));
         File[] files=dir.listFiles();
         return files;
     }
     public static String[] getFileNames(){
+        if(!new File(FileAssist.getUserDir("DMS")).exists())return null;
         File dir=new File(FileAssist.getUserDir("DMS"));
         String[] files=dir.list();
         return files;
