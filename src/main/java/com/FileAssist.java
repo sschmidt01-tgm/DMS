@@ -23,12 +23,22 @@ public class FileAssist {
                     + programmname;
         return userdir;
     }
+
+    /**
+     *
+     * @return returns all files saved on the server
+     */
     public static File[] getAllFiles(){
         if(!new File(FileAssist.getUserDir("DMS")).exists())return null;
         File dir=new File(FileAssist.getUserDir("DMS"));
         File[] files=dir.listFiles();
         return files;
     }
+
+    /**
+     *
+     * @return returns all file names on the server
+     */
     public static String[] getFileNames(){
         if(!new File(FileAssist.getUserDir("DMS")).exists())return null;
         File dir=new File(FileAssist.getUserDir("DMS"));

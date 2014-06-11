@@ -23,6 +23,9 @@ public class MyVaadinApplication extends UI {
         for(int i=0;i<listOfFiles.length;i++){
             Button btn = new MyDownloadButton(listOfFiles[i]);
             layout.addComponent(btn);
+            Button btn2 = new MyFileDeleteButton(listOfFiles[i]);
+            layout.addComponent(btn2);
         }
+
     }
 }
