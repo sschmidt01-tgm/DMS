@@ -20,20 +20,33 @@ import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * The Class MyUploader defines a user interface where the user has the abilit to upload and download Files up to UPLOAD_LIMIT
+ */
 public class MyUploader extends CustomComponent implements Serializable{
     private static final long serialVersionUID = -4292553844521293140L;
     //Removed User Support - private String user;
-    public MyUploader(/* Removed User Support -String user)*/){
-        //Removed User Support - this.user=user;
-        super();
-    }
+    // public MyUploader(/* Removed User Support -String user)*/){
+    //    //Removed User Support - this.user=user;
+    //    super();
+    //}
+
+    /**
+     * initialises the class
+     */
     public void init () {
         VerticalLayout layout = new VerticalLayout();
         basic(layout/*Removed User Support -,user*/);
         setCompositionRoot(layout);
     }
 
+    /**
+     *  Creates a basic upload user interface using the given layout
+     * @param layout the layout to use
+     */
     void basic(VerticalLayout layout/*Removed User Support -, final String username*/) {
+        // Prevent too big Files
+        final long UPLOAD_LIMIT = 1000000l;
         // Show uploaded file in this placeholder
         //final Image image = new Image("Uploaded Image");
         //image.setVisible(false);
@@ -85,8 +98,7 @@ public class MyUploader extends CustomComponent implements Serializable{
         upload.setButtonCaption("Start Upload");
         upload.addSucceededListener(receiver);
 
-        // Prevent too big Files
-        final long UPLOAD_LIMIT = 1000000l;
+
         upload.addStartedListener(new StartedListener() {
             private static final long serialVersionUID = 4728847902678459488L;
             @Override
@@ -113,7 +125,7 @@ public class MyUploader extends CustomComponent implements Serializable{
         });
 
         // Put the components in a panel
-        Panel panel = new Panel("Thunders cool File Storage");
+        Panel panel = new Panel("Upload");
         Layout panelContent = new VerticalLayout();
         panelContent.addComponent(upload);
         panel.setContent(panelContent);
