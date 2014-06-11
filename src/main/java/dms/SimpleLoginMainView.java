@@ -73,8 +73,8 @@ public class SimpleLoginMainView extends CustomComponent implements View {
 
     public SimpleLoginMainView(Persist persist) {
         this.persist = persist;
+        contactContainer = createDummyDatasource();
         init();
-        createDummyDatasource();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SimpleLoginMainView extends CustomComponent implements View {
      * just a dummy in-memory list, but there are many more practical
      * implementations.
      */
-    IndexedContainer contactContainer; 
+    IndexedContainer contactContainer;
 
     /*
      * After UI class is created, init() is executed. You should build and wire
@@ -112,7 +112,7 @@ public class SimpleLoginMainView extends CustomComponent implements View {
         HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
         setCompositionRoot(vertical);
 
-                // Add the topmost component.
+        // Add the topmost component.
 
         /* Build the component tree */
         VerticalLayout leftLayout = new VerticalLayout();
@@ -324,23 +324,23 @@ public class SimpleLoginMainView extends CustomComponent implements View {
      * we could be using SQLContainer, JPAContainer or some other to persist the
      * data.
      */
-   private IndexedContainer createDummyDatasource() {
+    private IndexedContainer createDummyDatasource() {
         IndexedContainer ic = new IndexedContainer();
 
         for (String p : fieldNames) {
             ic.addContainerProperty(p, String.class, "");
         }
-        
+
         List<Document> d;
         persist.begin();
         d = persist.getDocuments();
         persist.commit();
-        
+
 		for (int i = 0; i < d.size(); i++) {
 			Object id = ic.addItem();
                         Document temp = (Document) d.get(i);
 			ic.getContainerProperty(id, DAUTHOR).setValue(
-					temp.getAuthor());
+					temp.getAuthor().getName());
 			ic.getContainerProperty(id, DKAT).setValue(
 					temp.getCategory());
                         ic.getContainerProperty(id, DNAME).setValue(

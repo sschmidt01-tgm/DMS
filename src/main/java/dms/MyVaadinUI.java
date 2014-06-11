@@ -24,17 +24,19 @@ public class MyVaadinUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         persist = new Persist();
-        persist.begin();
-
         User u = new User();
-        u.setName("root");
-        u.setPassword("toor");
-        u.setAdmin(true);
-
-        persist.saveEntity(u);
-
-        persist.commit();
         
+//        if (persist.getUserWithCredentials("root", "toor") != null ) {
+//            persist.begin();
+//
+//            u.setName("root");
+//            u.setPassword("toor");
+//            u.setAdmin(true);
+//
+//            persist.saveEntity(u);
+//
+//            persist.commit();
+//        }
         persist.begin();
         Document d = new Document();
         d.setAuthor(persist.getUserByUserName("root"));
@@ -52,7 +54,7 @@ public class MyVaadinUI extends UI {
         getNavigator().addView(SimpleLoginView.NAME, slv);
         SimpleLoginMainView slmv = new SimpleLoginMainView(persist);
         getNavigator().addView(SimpleLoginMainView.NAME, slmv);
-        
+
         getNavigator().addViewChangeListener(new ViewChangeListener() {
             @Override
             public boolean beforeViewChange(ViewChangeEvent event) {

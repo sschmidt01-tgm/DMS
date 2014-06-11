@@ -29,11 +29,12 @@ public class Persist {
     private Query q;
     
     public Persist() {
-        try {
+//        try {
             setUp();
-        } catch (Exception ex) {
-            Logger.getLogger(Persist.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (Exception ex) {
+//            System.out.println("ex = " + ex.getMessage());
+//            Logger.getLogger(Persist.class.getName()).log(Level.SEVERE, ex.getMessage(), ex.getMessage());
+//        }
     }
 
     private void setUp() {

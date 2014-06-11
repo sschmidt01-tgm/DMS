@@ -34,8 +34,8 @@ public class Document implements Serializable {
     private String fileName;
     @Column // Keywords/Schluesselwoerter, what is this, scan file for it ?
     private String keywords;
-    @OneToMany
-    private Collection<Changes> documentChanges;
+//    @OneToMany
+//    private Collection<Changes> documentChanges;
 
     public Long getId() {
         return ID;
@@ -101,11 +101,11 @@ public class Document implements Serializable {
         this.keywords = keywords;
     }
 
-    public Collection<Changes> getDocumentChanges() {
-        return documentChanges;
-    }
-
-    public void setDocumentChanges(Collection<Changes> documentChanges) {
-        this.documentChanges = documentChanges;
-    }
+//    public Collection<Changes> getDocumentChanges() {
+//        return documentChanges;
+//    }
+//
+//    public void setDocumentChanges(Collection<Changes> documentChanges) {
+//        this.documentChanges = documentChanges;
+//    }
 }
