@@ -1,6 +1,7 @@
 package dms;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -11,6 +12,7 @@ import dms.model.User;
 
 @Theme("mytheme")
 @SuppressWarnings("serial")
+@Title("DMS by ayvazyan & schmidt")
 public class MyVaadinUI extends UI {
 
     private Persist persist;
