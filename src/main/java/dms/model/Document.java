@@ -22,8 +22,8 @@ public class Document implements Serializable {
     private Long ID;
     @ManyToOne
     private User author;
-//    @OneToMany  // a.k.a. owners/people who can access (rwx) the document
-//    private Collection<User> users;
+    @OneToMany  // a.k.a. owners/people who can access (rwx) the document
+    private Collection<User> users;
     @Column
     private String category;
     @Column
@@ -53,13 +53,13 @@ public class Document implements Serializable {
         this.author = author;
     }
 
-//    public Collection<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Collection<User> users) {
-//        this.users = users;
-//    }
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
 
     public String getCategory() {
         return category;

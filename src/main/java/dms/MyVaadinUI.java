@@ -12,7 +12,6 @@ import dms.model.Document;
 import dms.model.User;
 
 @Theme("mytheme")
-@SuppressWarnings("serial")
 @Title("DMS by ayvazyan & schmidt")
 public class MyVaadinUI extends UI {
 
@@ -37,12 +36,12 @@ public class MyVaadinUI extends UI {
 //
 //            persist.commit();
 //        }
-        persist.begin();
-        Document d = new Document();
-        d.setAuthor(persist.getUserByUserName("root"));
-        d.setCategory("kat");
-        d.setComment("comment");
-        persist.saveEntity(d);
+//        persist.begin();
+//        Document d = new Document();
+//        d.setAuthor(persist.getUserByUserName("root"));
+//        d.setCategory("kat");
+//        d.setComment("comment");
+//        persist.saveEntity(d);
 
         persist.begin();
         u = persist.getUserWithCredentials("root", "toor");

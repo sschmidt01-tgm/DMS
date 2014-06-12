@@ -79,7 +79,7 @@ public class SimpleLoginView extends CustomComponent implements View, Button.Cli
 //                Store the current user in the service session
                 getSession().setAttribute("user", u.getName());
 //                Navigate to main view
-                getUI().getNavigator().navigateTo(SimpleLoginMainView.NAME); // or MyVaadinUI.NAME
+                getUI().getNavigator().navigateTo(SimpleLoginMainView.NAME);
                 
             }
         } else {
